@@ -1,5 +1,6 @@
 package org.grails.gorm.buildtestdata.builders
 
+import org.grails.gorm.buildtestdata.handler.AssociationMinSizeHandler
 import org.grails.gorm.buildtestdata.handler.PersistentEntityNullableConstraintHandler
 import grails.gorm.validation.Constrained
 import grails.gorm.validation.ConstrainedProperty
@@ -36,6 +37,10 @@ class GormEntityTestDataBuilder extends ConstraintsTestDataBuilder{
         handlers.put(
             ConstrainedProperty.NULLABLE_CONSTRAINT, 
             new PersistentEntityNullableConstraintHandler(persistentEntity,mappingContext)
+        )
+        handlers.put(
+            ConstrainedProperty.MIN_SIZE_CONSTRAINT,
+            new AssociationMinSizeHandler(persistentEntity)
         )
     }
 

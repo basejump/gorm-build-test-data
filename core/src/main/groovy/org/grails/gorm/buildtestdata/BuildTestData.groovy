@@ -1,10 +1,10 @@
 package org.grails.gorm.buildtestdata
 
-trait BuildTestData{
-    static buildLazy(Map propValues=[:]){
-        BuildTestDataApi.findBuilder(this).buildLazy(new BuildTestDataContext(propValues))
+trait BuildTestData<T>{
+    static T buildLazy(Map propValues=[:]){
+        (T) BuildTestDataApi.findBuilder(this).buildLazy(new BuildTestDataContext(propValues))
     }
-    static build(Map propValues=[:]){
-        BuildTestDataApi.findBuilder(this).build(new BuildTestDataContext(propValues))
+    static T build(Map propValues=[:]){
+        (T) BuildTestDataApi.findBuilder(this).build(new BuildTestDataContext(propValues))
     }
 }

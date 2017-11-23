@@ -46,7 +46,7 @@ class PogoTestDataBuilder implements TestDataBuilder{
                 ctx.data = [:] + initialProps
             }    
         }
-        def instance = target.newInstance()        
+        def instance = newInstance        
         
         if(ctx.data){
             dataBinder.bind(instance,new SimpleMapDataBindingSource(ctx.data))
@@ -54,6 +54,18 @@ class PogoTestDataBuilder implements TestDataBuilder{
         instance
     }
 
+    def getNewInstance(){
+        if(List.isAssignableFrom(target)){
+            [] as List
+        }
+        else if(Set.isAssignableFrom(target)){
+            [] as Set
+        }
+        else{
+            target.newInstance()
+        }
+    }
+    
     @Override
     def buildLazy(BuildTestDataContext ctx) {
         return build(ctx)

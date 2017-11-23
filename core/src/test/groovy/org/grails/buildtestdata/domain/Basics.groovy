@@ -2,13 +2,14 @@ package org.grails.buildtestdata.domain
 
 import grails.gorm.annotation.Entity
 import org.grails.buildtestdata.domain.toone.Enum
+import org.grails.gorm.buildtestdata.BuildTestData
 
 import java.sql.Time
 import java.sql.Timestamp
 import java.time.*
 
 @Entity
-class Basics {
+class Basics implements BuildTestData<Basics>{
 
     Enum anEnum
 

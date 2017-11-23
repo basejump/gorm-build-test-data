@@ -4,8 +4,6 @@ import grails.gorm.annotation.Entity
 import org.grails.gorm.buildtestdata.BuildTestData
 
 @Entity
-class CircularOne implements BuildTestData<CircularOne>{
-
-    CircularOne one
-    
+class CircularIndirect implements BuildTestData<CircularIndirect>{
+    CircularIndirectLink circularIndirectLink
 }

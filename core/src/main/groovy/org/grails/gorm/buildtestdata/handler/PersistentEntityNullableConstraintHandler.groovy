@@ -24,24 +24,35 @@ class PersistentEntityNullableConstraintHandler extends NullableConstraintHandle
 
     @Override
     Object determineNonStandardValue(Object instance, String propertyName, Constraint appliedConstraint, Constrained constrainedProperty, BuildTestDataContext ctx) {
-        return Object.determineNonStandardValue(instance, propertyName, appliedConstraint, constrainedProperty, ctx)
-    }
-
-    Object determineAssociationValue(Object instance, PersistentProperty persistentProperty) {
-        Association association = (Association) persistentProperty
-        switch (association.type) {
-            case OneToOne:
-
-                break
-            case ManyToOne:
-
-                break
-            case Embedded:
-
-                break
-            case ManyToMany:
-
-                break
+        PersistentProperty persistentProperty = persistentEntity.getPropertyByName(propertyName)
+        if(persistentProperty instanceof Association){
+            switch (persistentProperty){
+                
+            }
         }
+        
+        return super.determineNonStandardValue(instance, propertyName, appliedConstraint, constrainedProperty, ctx)
     }
+//    @Override
+//    Object determineNonStandardValue(Object instance, String propertyName, Constraint appliedConstraint, Constrained constrainedProperty, BuildTestDataContext ctx) {
+//        return super.determineNonStandardValue(instance, propertyName, appliedConstraint, constrainedProperty, ctx)
+//    }
+//
+//    Object determineAssociationValue(Object instance, PersistentProperty persistentProperty) {
+//        Association association = (Association) persistentProperty
+//        switch (association.type) {
+//            case OneToOne:
+//
+//                break
+//            case ManyToOne:
+//
+//                break
+//            case Embedded:
+//
+//                break
+//            case ManyToMany:
+//
+//                break
+//        }
+//    }
 }

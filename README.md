@@ -2,21 +2,76 @@
 
 ## Gorm Build Test Data
 
-This plugin is a major rewrite of the build-test-data plugin.
+This plugin is a major rewrite of the [build-test-data plugin](http://plugins.grails.org/plugin/longwa/build-test-data).
+I started converting the build-test-data plugin for use with Grails 3.3, but because of the changes to Gorm and testing,
+support in Grails 3.3, I finally decided to create a separate plugin. 
 
-### Changes
+The project setup is mirrored from gorm-graphql. 
 
- 
+### Differences with build-test-data
 
-Because of the massive incompatible changes I decided to release it in a 
-separate plugin. 
-The build-test-data plugin used the mixins framework and dependened on grails. 
+Project is split in three modules
 
-This plugin breaks build-test-data up in three parts: 
+Part | Description
+--- | ---
+core | Contains the BuildTestData trait and depends on gorm and databinding only!
+testing | For testing purposes, contains a Build annotation like the Build mixin of build-test-data. 
+plugin  | Plugin contains TraitInjector that applies the BuildTestData trait to the available domainclasses
 
-`gorm-build-test-data`: Depends only on gorm and databinding
+* Binding is changed to grails-databinding
+* Configuration is removed, an initialPropsResolver can be setup to resolve default values
+* Supports pogo, validateable and gorm entities (plugable to add more)
+* Added additional basic-type (LocalDate,LocalDateTime,...)
 
-`gorm-build-test-data-testing`: Allows build-test-data `like` behaviour for unit tests 
+## Gorm usage
+
+
+```groovy
+@Entity
+class User implements BuilderTestData{
+    String name
+}
+..
+User.build() // or User.build([name:'whatever'])
+User.buildLazy() // or User.buildLazy([name:'whatever'])
+```
+
+## Testing usage
+
+For testing the plugin will dynamically add the BuildTestDataApi to the metaclass
+of the subjects (User and Role in the example below). This happens in a spock hook. 
+```groovy
+@Build([User,Role])
+class MySpec extends Specification{
+
+    def 'test'(){
+       expect:
+        User.build() 
+    }
+}
+```
+is equivalent to: 
+```groovy
+class MySpec extends Specification implements DomainUnitTest<User>, BuildTestDataTest{
+    Class[] getClassesToBuildTestData(){
+        [User,Role] as Class[]
+    }
+    
+    Class<?>[] getDomainClassesToMock() {
+        [User,Role] as Class[]
+    }
+    
+    def 'test'(){
+       expect:
+        User.build() 
+    }
+}
+```
+
+## Plugin usage
+
+Simply add the plugin to your project and each domainclass will implement the `BuildTestData` trait.
+
 
 ## The Build Test Data Grails Plugin 
 

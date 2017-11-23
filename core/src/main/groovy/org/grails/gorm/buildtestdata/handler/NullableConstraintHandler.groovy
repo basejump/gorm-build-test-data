@@ -22,7 +22,7 @@ class NullableConstraintHandler extends AbstractHandler {
     Object determineNonStandardValue(Object instance, String propertyName, Constraint appliedConstraint, 
                                      Constrained constrainedProperty,BuildTestDataContext ctx) {
         if(constrainedProperty instanceof ConstrainedProperty){
-            ctx.satisfyNested(instance,propertyName,constrainedProperty)
+            ctx.satisfyNested(instance,propertyName,constrainedProperty.propertyType)
         }
     }
 

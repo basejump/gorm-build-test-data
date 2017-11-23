@@ -120,7 +120,7 @@ class ConstraintsTestDataBuilder extends PogoTestDataBuilder {
                     satisfyConstrained(instance, requiredPropertyName,(ConstrainedProperty) constrained,ctx)    
                 }
                 else if(!isBasicType(((ConstrainedProperty)constrained).propertyType)){
-                    ctx.satisfyNested(instance,requiredPropertyName,(ConstrainedProperty)constrained)
+                    ctx.satisfyNested(instance,requiredPropertyName,((ConstrainedProperty)constrained).propertyType)
                 }
             }
         }

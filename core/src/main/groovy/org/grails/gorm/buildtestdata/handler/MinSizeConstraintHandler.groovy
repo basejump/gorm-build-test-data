@@ -1,7 +1,9 @@
 package org.grails.gorm.buildtestdata.handler
 
 import grails.gorm.validation.ConstrainedProperty
+import grails.gorm.validation.Constraint
 import org.codehaus.groovy.runtime.InvokerHelper
+import org.grails.gorm.buildtestdata.BuildTestDataContext
 
 class MinSizeConstraintHandler extends AbstractHandler {
 //    void handle(domain, propertyName, appliedConstraint, constrainedProperty = null, circularCheckList = null) {
@@ -30,13 +32,11 @@ class MinSizeConstraintHandler extends AbstractHandler {
 //        }
 //    }
 
-    
-    
     @Override
-    void handle(Object instance, String propertyName,ConstrainedProperty constrained) {
-        handle(instance,propertyName,constrained,constrained.minSize)
+    void handle(Object instance, String propertyName, Constraint appliedConstraint, ConstrainedProperty constrainedProperty, BuildTestDataContext ctx) {
+        handle(instance,propertyName,constrainedProperty,ctx,constrainedProperty.minSize)
     }
-    void handle(Object instance, String propertyName,ConstrainedProperty constrained,int minSize) {
+    void handle(Object instance, String propertyName,ConstrainedProperty constrained,BuildTestDataContext ctx,int minSize) {
         switch(constrained.propertyType){
             case String:
                 String value
