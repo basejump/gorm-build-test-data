@@ -1,0 +1,37 @@
+apply plugin: 'codenarc'
+
+dependencies {
+    compile "org.grails:grails-datastore-gorm:$gormVersion"
+    compile 'org.grails:grails-databinding:3.3.1'
+    compile "dk.brics.automaton:automaton:1.11-8"
+    
+    codenarc 'org.codenarc:CodeNarc:0.25.2'
+
+    testCompile "org.grails:grails-plugin-testing:3.3.0.M2"    
+    testCompile "org.grails:grails-datastore-gorm-hibernate5:$gormVersion"
+    testCompile "org.grails:grails-datastore-gorm-mongodb:6.1.2.RELEASE"
+    testCompile 'com.github.fakemongo:fongo:2.1.0'
+    testRuntime "com.h2database:h2:1.4.192"
+    testRuntime "org.apache.tomcat:tomcat-jdbc:8.5.0"
+    testRuntime "org.apache.tomcat.embed:tomcat-embed-logging-log4j:8.5.0"
+    testRuntime "org.slf4j:slf4j-api:1.7.10"
+}
+
+targetCompatibility = 1.8
+sourceCompatibility = 1.8
+
+codenarc {
+    toolVersion = '0.25.2'
+    configFile = file("${projectDir}/config/codenarc/rules.groovy")
+    maxPriority1Violations = 0
+    maxPriority2Violations = 2
+    maxPriority3Violations = 8
+}
+
+codenarcMain {
+    exclude '**/GormScalars.groovy'
+}
+
+codenarcTest {
+    ignoreFailures = true
+}
